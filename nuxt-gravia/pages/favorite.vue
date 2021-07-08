@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-btn @click="back">back</v-btn>
     Favorite
     <br>
 
@@ -33,8 +32,6 @@
       </v-col>
     </v-row>
 
-    <v-btn @click="back">back</v-btn>
-
   </div>
 </template>
 
@@ -49,9 +46,6 @@ export default {
     this.getAll()
   },
   methods: {
-    back () {
-      this.$router.back()
-    },
     async getAll () {
       let res = await this.$fdb.allDocs()
       if (res.rows) {

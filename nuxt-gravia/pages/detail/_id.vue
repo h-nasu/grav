@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-btn @click="back">back</v-btn>
     {{ item.title }}
     <br>
 
@@ -33,8 +32,6 @@
       </v-col>
     </v-row>
 
-    <v-btn @click="back">back</v-btn>
-
   </div>
 </template>
 
@@ -56,9 +53,6 @@ export default {
     this.checkImageFavorites()
   },
   methods: {
-    back () {
-      this.$router.back()
-    },
     async checkImageFavorites () {
       this.inFavorites = []
       for (let i in this.item.imageUrls) {
