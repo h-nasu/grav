@@ -15,6 +15,7 @@
         <v-img
         :lazy-src="image"
         :src="image"
+        contain
         >
 
           <div class="image_overlay">
