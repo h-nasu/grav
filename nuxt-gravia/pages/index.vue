@@ -2,7 +2,7 @@
   <div>
     <v-card>
       <v-card-title>
-        Gravia
+        Gravia <v-btn class="ml-3" to="favorite">favorite</v-btn>
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
@@ -89,6 +89,10 @@ export default {
     await this.$pdb.createIndex({
       index: {fields: ['title']}
     })
+
+    const info2 = await this.$fdb.info()
+    console.log(info2)
+
     this.getDataFromApi()
   },
   watch: {

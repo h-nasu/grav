@@ -6,4 +6,7 @@ PouchDB.plugin(PouchDBFind)
 export default ({ app }, inject) => {
   const pdb = new PouchDB(NuxtConfig.maindb)
   inject('pdb', pdb)
+
+  const fdb = new PouchDB(NuxtConfig.favoritedb)
+  inject('fdb', fdb)
 }
