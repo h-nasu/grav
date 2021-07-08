@@ -28,15 +28,23 @@
               v-for="item in items"
               :key="item.name"
             >
-              <td>{{ item._id }}</td>
-              <td>{{ item.title }}</td>
+            <td>
+              <n-link :to="`/detail/${item._id}`">
+                {{ item._id }}
+              </n-link>
+            </td>
               <td>
-                <v-img
-                  v-if="item.imageUrls.length > 0"
-                  :lazy-src="item.imageUrls[0]"
-                  :src="item.imageUrls[0]"
-                  max-width="100"
-                ></v-img>
+                {{ item.title }}
+              </td>
+              <td>
+                <n-link :to="`/detail/${item._id}`">
+                  <v-img
+                    v-if="item.imageUrls.length > 0"
+                    :lazy-src="item.imageUrls[0]"
+                    :src="item.imageUrls[0]"
+                    max-width="100"
+                  ></v-img>
+                </n-link>
               </td>
             </tr>
           </tbody>
@@ -70,6 +78,11 @@ export default {
     }
   },
   async mounted () {
+    if (this.$store.state.items.searchParams.options) {
+      this.options = this.$store.state.items.searchParams.options
+      this.search = this.$store.state.items.searchParams.search
+    }
+
     const info = await this.$pdb.info()
     console.log(info)
     this.total = info.doc_count
@@ -92,6 +105,8 @@ export default {
       this.apiCall().then(data => {
         this.items = data.items
         this.loading = false
+
+        this.updateSearchParams(this.options)
       })
     },
     /**
@@ -138,6 +153,13 @@ export default {
 
     doSearch () {
       this.getDataFromApi()
+    },
+
+    updateSearchParams (value) {
+      this.$store.commit('items/updateSearchParams', {
+        options: value,
+        search: this.search
+      })
     }
 
 
