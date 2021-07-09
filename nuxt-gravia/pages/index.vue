@@ -50,9 +50,8 @@
           </tbody>
         </template>
       </v-data-table>
-
-      <v-btn @click="importdb">import db</v-btn>
     </v-card>
+    <v-btn class="float-right mt-12" @click="importdb">import db</v-btn>
   </div>
 </template>
 
