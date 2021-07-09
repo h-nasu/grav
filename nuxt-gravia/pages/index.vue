@@ -50,6 +50,8 @@
           </tbody>
         </template>
       </v-data-table>
+
+      <v-btn @click="importdb">import db</v-btn>
     </v-card>
   </div>
 </template>
@@ -78,10 +80,6 @@ export default {
     }
   },
   async mounted () {
-    if (this.$store.state.items.searchParams.options) {
-      this.options = this.$store.state.items.searchParams.options
-      this.search = this.$store.state.items.searchParams.search
-    }
 
     const info = await this.$pdb.info()
     console.log(info)
@@ -93,7 +91,13 @@ export default {
     const info2 = await this.$fdb.info()
     console.log(info2)
 
-    this.getDataFromApi()
+    if (this.$store.state.items.searchParams.options) {
+      this.options = this.$store.state.items.searchParams.options
+      this.search = this.$store.state.items.searchParams.search
+    } else {
+      this.getDataFromApi()
+    }
+
   },
   watch: {
     options: {
@@ -120,10 +124,8 @@ export default {
       return new Promise(async (resolve, reject) => {
         const { sortBy, sortDesc, page, itemsPerPage } = this.options
 
-        let queryParams = {}
-        let sort = []
-
-
+        let queryParams = {_id: {$gte: null}}
+        let sort = ['_id']
 
         if (sortBy[0]) {
           queryParams[sortBy[0]] = {$gte: null}
@@ -164,6 +166,17 @@ export default {
         options: value,
         search: this.search
       })
+    },
+
+    importdb () {
+      const self = this
+      this.$pdb.load('/data/dump.txt').then(function () {
+        location.reload()
+      }).catch(function (err) {
+        // HTTP error or something like that
+        alert('import error')
+        console.log(err)
+      });
     }
 
 

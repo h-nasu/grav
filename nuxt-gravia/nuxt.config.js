@@ -72,6 +72,6 @@ export default {
   build: {
   },
 
-  maindb: 'http://admin:admin@localhost:5984/gravias',
+  maindb: 'gravias',
   favoritedb: 'favorite'
 }
