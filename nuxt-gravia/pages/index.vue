@@ -19,6 +19,7 @@
         :search="search"
         :options.sync="options"
         :loading="loading"
+        :footer-props="footerProps"
       >
         <template
           v-slot:body="{ items }"
@@ -75,10 +76,15 @@ export default {
       items: [],
       total: 0,
       currentPage: 1,
+      footerProps: {'items-per-page-options': [5, 10, 20, 50, 100]},
 
     }
   },
   async mounted () {
+    if (this.$store.state.items.searchParams.options) {
+      this.options = this.$store.state.items.searchParams.options
+      this.search = this.$store.state.items.searchParams.search
+    }
 
     const info = await this.$pdb.info()
     console.log(info)
@@ -90,12 +96,7 @@ export default {
     const info2 = await this.$fdb.info()
     console.log(info2)
 
-    if (this.$store.state.items.searchParams.options) {
-      this.options = this.$store.state.items.searchParams.options
-      this.search = this.$store.state.items.searchParams.search
-    } else {
-      this.getDataFromApi()
-    }
+    this.getDataFromApi()
 
   },
   watch: {
