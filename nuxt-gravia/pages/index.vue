@@ -135,15 +135,16 @@ export default {
 
         }
         if (this.search) {
-          //queryParams['title'] = {$regex: `${ RegExp(this.search) }`}
-          queryParams['title'] = {$regex: `(?i)${this.search}`}
+          queryParams['title'] = {$regex:  RegExp(this.search, 'i') }
+          //queryParams['title'] = {$regex: `(?i)${this.search}`}
         }
-        let res = await this.$pdb.find({
+        const params = {
           selector: queryParams,
           sort: sort,
           limit: itemsPerPage,
           skip: itemsPerPage * (page - 1)
-        })
+        }
+        let res = await this.$pdb.find(params)
 
         if (res.docs) {
           this.currentPage = page

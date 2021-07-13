@@ -11,7 +11,7 @@
           fab
           fixed
           bottom
-          right
+          left
           @click="back">
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
